@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Splitwise Expense Manager API
+  description: API documentation for managing users, groups, expenses, and debt simplification.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/users/create:
+    post:
+      summary: Create a new user
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully created user
+
+  /api/groups/create:
+    post:
+      summary: Create a new group
+      parameters:
+        - name: name
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully created group
+
+  /api/expenses/group:
+    post:
+      summary: Add a group expense
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                groupId:
+                  type: string
+                description:
+                  type: string
+                amount:
+                  type: number
+                paidByUserId:
+                  type: string
+                involvedUserIds:
+                  type: array
+                  items:
+                    type: string
+                splitType:
+                  type: string
+                  enum: [EQUAL, EXACT, PERCENTAGE]
+                splitValues:
+                  type: array
+                  items:
+                    type: number
+      responses:
+        '200':
+          description: Expense added successfully
+
+  /api/expenses/individual:
+    post:
+      summary: Add an individual expense
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                amount:
+                  type: number
+                paidByUserId:
+                  type: string
+                toUserId:
+                  type: string
+                splitType:
+                  type: string
+                  enum: [EQUAL, EXACT, PERCENTAGE]
+                splitValues:
+                  type: array
+                  items:
+                    type: number
+      responses:
+        '200':
+          description: Individual expense added successfully
+
+  /api/groups/{groupId}/getSimplifiedDebts:
+    get:
+      summary: Get simplified debts for a group
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of simplified transactions
+
+  /api/groups/{groupId}/applySimplification:
+    post:
+      summary: Apply simplified debts to database
+      parameters:
+        - name: groupId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: simplifiedByUserId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Simplification applied successfully
