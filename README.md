@@ -1,6 +1,6 @@
-# 📘 SplitwiseApp
+# 📘 Splitify
 
-**SplitwiseApp** is a full-featured Spring Boot application for managing shared expenses among individuals and groups. It supports multiple split types (Equal, Exact, Percentage), tracks both group and individual balances, and includes a transaction simplification algorithm to reduce the number of settlements required.
+**Splitify** is a full-featured Spring Boot application for managing shared expenses among individuals and groups. It supports multiple split types (Equal, Exact, Percentage), tracks both group and individual balances, and includes a transaction simplification algorithm to reduce the number of settlements required.
 
 ---
 
